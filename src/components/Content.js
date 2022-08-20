@@ -2,7 +2,7 @@ import React from 'react';
 import { useState } from 'react';
 import '../App.css';
 
-const Content = ({data, em, pw, inputs, loading, logo}) => {
+const Content = ({data, em, inputs, loading}) => {
 
     let [link, setLink] = useState(false);
     let [open, setOpen] = useState(false);
@@ -13,9 +13,10 @@ const Content = ({data, em, pw, inputs, loading, logo}) => {
     let [payment, setPayment] = useState(false);
     let [date, setDate] = useState(false);
     let errors = [];
+    
 
 
-    if (em.length !== 0 || pw.length !== 0) {
+    if (em.length !== 0) {
         loading.style.display = 'flex';
 
         setTimeout(() => {
@@ -24,10 +25,10 @@ const Content = ({data, em, pw, inputs, loading, logo}) => {
             
             setOpen(true)
     
-          }, 3000);
+          }, 2000);
     } 
     else {
-        alert('이메일 또는 패스워드를 입력해주세요')
+        alert('Please input your email :)')
         window.location.reload();
     }
     
@@ -35,89 +36,39 @@ const Content = ({data, em, pw, inputs, loading, logo}) => {
 
       function Normal() {
 
+
         for (var i = 0; i < data.length; i++) {
 
-            if (em == data[i].이메일 && pw == data[i].하다시연번) {
+            if (em == data[i].이메일) {
                 inputs.style.display = 'none';
-                logo.style.display = 'none';
-
-                let 진행상황 = data[i].진행상황.replace(/\.|\-|[(0-9)]/g,'');
-                let 진행중국어 = 진행상황.replace('사범처리대상', '罚款处理对象')
-                                        .replace('심사대기', '材料审核待机')
-                                        .replace('검토중', '材料审核中')
-                                        .replace('서류 보완 요청', '材料补交请求中')
-                                        .replace('서류 준비 완료', '材料准备完成')
-                                        .replace('전자민원 신청 완료', '出入境申请提交完成')
-                                        .replace('학생에게 전자민원 신청 완료 안내 완료', '申请提交完成学生通知完毕')
-                                        .replace('출입국 사무소 접수 완료', '出入境受理完成')
-                                        .replace('학생에게 출입국 사무소 접수 완료 안내 완료', '受理完成学生通知完毕')
-                                        .replace('반려', '材料已驳回')
-                                        .replace('이첩', '出入境移交处理')
-                                        .replace('학생에게 반려 이메일 안내 완료', '材料驳回通知邮件已发送')
-                                        .replace('반려 서류 준비 완료', '驳回材料提交准备完成')
-                                        .replace('반려 보완 완료', '学生驳回材料补交完成')
-                                        .replace('허가서 발급 완료', '出入境许可书发放完成')
-                                        .replace('학생에게 허가서 발송 완료', '许可书向学生发送完成')
-                                        .replace('모든 절차 완료', '所有步骤均已完成')
-                                        .replace('이첩 후 처리 완료', '学生移交后处理完成')
-                                        .replace('무효 신청', '无效申请')
-                let 진행영어 = 진행상황.replace('사법처리대상', 'Subject to legal action')
-                                        .replace('심사대기', 'Waiting for Review')
-                                        .replace('검토중', 'Under Review')
-                                        .replace('서류 보완 요청', 'Request for supplementary documents')
-                                        .replace('서류 준비 완료', 'Documents ready')
-                                        .replace('전자민원 신청 완료', 'Submitted to the immigration')
-                                        .replace('학생에게 전자민원 신청 완료 안내 완료', 'Completion of announcement about submission to the immigration')
-                                        .replace('출입국 사무소 접수 완료', 'Submitted to the immigration')
-                                        .replace('학생에게 출입국 사무소 접수 완료 안내 완료', 'Completion of announcement about submission to the immigration')
-                                        .replace('반려', 'Rejection from the immigration')
-                                        .replace('이첩', 'Transfer of Notification from immigration')
-                                        .replace('학생에게 반려 이메일 안내 완료', 'Rejected Documents Notified')
-                                        .replace('반려 서류 준비 완료', 'Supplement documents ready')
-                                        .replace('반려 보완 완료', 'Rejected document supplemented')
-                                        .replace('허가서 발급 완료', 'Permission of Extension issued')
-                                        .replace('학생에게 허가서 발송 완료', 'Permission of Extension Sent')
-                                        .replace('모든 절차 완료', 'All Processed Complete')
-                                        .replace('이첩 후 처리 완료', 'Post-Transfer Processing Completed')
-                                        .replace('무효 신청', 'application for invalidation')
-
+                let 결제누적 = data[i].상태 || '미납';
                 
 
                 return (
                 <div className='조회화면'>
-                    <p>({data[i].하다시연번})<br/>
-                    {data[i].전체이름}님,<br/>
-                    안녕하세요!</p>
-                    <p>현재 외국인등록증 신청 진행 상황은<br/>
-                    <b>{진행상황}</b>입니다.</p>
+                    <p>
+                    Hello, {data[i].이름}!<br/>
+                    Your reservation has been submitted successfully 😊</p>
 
-                    <p>{data[i].전체이름}同学,<br/>
-                    目前国人登陆证申请进行状态为<br/>
-                    <b>{진행중국어}</b></p>
+                    <p>Room Type : <b>{data[i].숙소}</b><br/>
+                    Staying Period : <b>{data[i].체크인} ~ {data[i].체크아웃}</b>
+                    </p>
 
-                    <p>Hello, {data[i].전체이름}!<br/>
-                    Your current status for the ARC application is:<br/>
-                    <b>{진행영어}</b></p>
+                    <p>&nbsp;</p>
 
-                    
+                    <h3><b>Deposit</b></h3>
 
-                    {
-                        data[i].진행상황 === '3-1. 전자민원 신청 완료' || data[i].진행상황 === '3-3. 출입국 사무소 접수 완료'
-                        ? setDate(true)
-                        : null
-                    }
-
-                    {
-                        date === true
-                        ? <출입국제출일 />
-                        : null
-                    }
 
                     {
 
-                        data[i].진행상황 === '1. 서류 보완 요청'
+                        결제누적.indexOf("보증금") != -1 || 결제누적.indexOf("완납") != -1 || 결제누적.indexOf("보증금 월세") != -1
                         ? setLink(true)
-                        : null
+                        : <>
+                        <p>Please click the button below to pay the deposit.<br/>
+                        In case of the overseas transfer, it might take a few days to be confirmed.<br/>
+                        If you already did the payment, please kindly wait for the confirmation!</p>
+                        <button id="납부하기" onClick={() => {setLink5(true)}}>Deposit Payment Form</button>
+                        </>
 
                     }
 
@@ -129,21 +80,10 @@ const Content = ({data, em, pw, inputs, loading, logo}) => {
                     }
 
                     {
-
-                    data[i].진행상황 === '4-1. 반려' || data[i].진행상황 === '4-2. 이첩' || data[i].진행상황 === '4-3. 학생에게 반려 이메일 안내 완료'
-                    ? setLink4(true)
-                    : null
-
-                    }
-
-                    {
-
-                    link4 === true
-                    ? <반려폼 />
-                    : null
-                    }
-
-                    
+                        link5 === true
+                        ? <보증금링크 />
+                        : null
+                    }                  
 
                 </div>
                 )
@@ -153,121 +93,135 @@ const Content = ({data, em, pw, inputs, loading, logo}) => {
         }
 
         if (errors.length === data.length) {
-            alert('신청 정보가 없거나,\n입력하신 정보가 틀렸습니다.');
+            alert('Your reservation has not been reached to us.\nPlease contact us through the button on the bottom right.');
             window.location.reload()
         }
 
-        if (data[i].결제확인용 === "") {
-            document.getElementById('결제').style.display = "none"
-        }
 
         return <div></div>
 
-        function Airt() {
-            window.location.href = `${data[i].보완폼링크}`
+
+        function 보증금링크() {
+            window.location.href = `${data[i].보증금링크}`
+            // window.open()
         }
 
-        function 결제링크() {
-            window.location.href = `${data[i].결제폼링크}`
+        function 월세링크() {
+            window.location.href = `${data[i].월세납부링크}`
         }
 
-        function 반려링크() {
-            window.location.href = `${data[i].반려링크}`
+        function 연장폼() {
+            window.location.href = 'https://airtable.com/shr7LXyaIU9nz5m8l'
         }
 
-        function 결제버튼() {
-            return <button id="결제" onClick={() => {setLink3(true)}}>결제하기</button>
-        }
+        
 
-        function 출입국제출일() {
-            return <p>전자민원 신청일 : {data[i].APP전자민원신청일}</p>
-        }
 
-        function 반려폼() {
+        function Form() {        
+
+            let 납부일 = data[i].납부일 || '미납';
+            let 개별납부일 = 납부일.toString().split(',');
+            let 결제누적 = data[i].상태 || '미납';
+            let 체크인 = data[i].체크인.toString().split('-')
+            let 체크아웃 = data[i].체크아웃.toString().split('-')
+
             return (
                 <>
-                    <p>ㅡ</p>
-                    <p>반려 사유는 아래와 같습니다</p>
+                    <p>Your Deposit has been confirmed at {개별납부일[0]},</p>
 
-                    <div id="reasonBox">{data[i].반려사유}
-                    </div>
-
-                   
                     
-                    <button id="납부하기" onClick={() => {setLink5(true)}}>반려 보완 서류 제출 / 点击补交材料<br/>Submission of supplementary documents</button>
-
                     {
-                        link5 === true
-                        ? <반려링크 />
-                        : null
+
+                        data[i].계약서발송 == null
+                        ? <p>We are preparing to send you a contract in 2-3 days.<br/>
+                        Contract will be sent to <b>{data[i].이메일}</b> 😊<br/>
+                        (The sender's name will be 모두싸인 or modusign)</p>
+                        : 결제누적.indexOf("보증금 월세") != -1
+                        ? <><p>(also with the first month's rent)</p>
+                        <월세영역
+                        개별납부일={개별납부일}
+                        결제누적={결제누적}
+                        체크인={체크인}
+                        체크아웃={체크아웃}
+                        />
+                        </>
+                        : <><p>The contract has been sent to your email <b>{data[i].이메일}</b>.<br/>
+                        Please check the mail sent from 모두싸인(or modusign),<br/>
+                        Finish the procedure of digital signature and payment of the first month's rent.</p>
+                        <월세영역
+                        개별납부일={개별납부일}
+                        결제누적={결제누적}
+                        체크인={체크인}
+                        체크아웃={체크아웃}
+                        />
+                        </>
+
                     }
+         
                 </>
             )
         }
 
-        function Form() {
+        function 월세영역({개별납부일, 결제누적, 체크인, 체크아웃}) {
 
-            const rea = [data[i].체류도래보완_진행중, data[i].초과학기_진행중, data[i].졸업논문_진행중, 
-                        data[i].상위진학_진행중, data[i].어학원_진행중, data[i].거주지보완_진행중];
-
-            const newRea = rea.filter(item => {
-                if (item != null && item !== '보완완료') {
-                    return true;
-                } return false;
-
-            }).map((m) => {
-                // let aaa = m.replace(/\"/g,'')
-                let aaa = m
-                return <p id='reasons'>◼ {aaa}</p>
-            })
-
-
+            let 체크인월 = 체크인[1];
+            let 체크아웃월 = 체크아웃[1];
+            let 투숙개월 = 체크아웃월 - 체크인월 + 1;
+            let 해당납부월 = 개별납부일.toString().split('-')[1];
             
 
+            // function 월세반복() {
+            //     // for (var i = 0; i < 투숙개월; i++) {
+            //     //     document.getElementById('ddd').innerHTML
+            //     //      += "<p>Monthly rent for 2022-${체크인월+i} has been confirmed at ${개별납부일[1+i]}.<br/></p>";
+            //     // }
             
+            
+
+            //     //  if (개별납부일[1]+i < 체크아웃월) {
+            //     //     document.getElementById('월세내역').innerHTML
+            //     //     += `<p>Your next payment date is : ${해당납부월}/${체크인[2]}</p>`
+            //     //  }
+
+            //     return <div id="ddd"></div>
+            // }
 
             return (
                 <>
-                    <p>ㅡ</p>
-                    <p>보완 사유는 아래와 같습니다 / 需要补交的材料如下<br/>
-                    The reasons for supplementation are as follows.<br/></p>
+                <p>&nbsp;</p>
 
-                    <div id="reasonBox">{newRea}<br/>
-                    (최종 검토 시간 : {data[i].최종검토})
-                    </div>
+                <h3><b>Monthly Rent</b></h3>
 
-                   
-                    
-                    
-                    
-                    
-                    {
+                {
+                    결제누적.indexOf("월세") != -1 || 결제누적.indexOf("보증금 월세") != -1
+                    ? <><p>Your last payment has been confirmed at {개별납부일[개별납부일.length - 1]},<br/>
+                    please refer to that your payment date is <b>every {체크인[2]} of the month</b>.</p>
+                    <p>If you want to extend your stay, please click the button below 😎</p>
+                    <button id="납부하기" onClick={() => {setLink3(true)}}>Request for the extension!</button></>
+                    : 결제누적.indexOf("완납") != -1
+                    ? <><p>All of your Monthly rent has been confirmed successfully! (at {개별납부일[개별납부일.length - 1]})</p>
+                    <p>If you want to extend your stay, please click the button below 😎</p>
+                    <button id="납부하기" onClick={() => {setLink3(true)}}>Request for the extension!</button>
+                    </>
+                    : <>
+                    <p>Your monthly rent has not been reached to us yet.<br/>
+                    Please click the button below to pay the monthly rent.<br/>
+                    In case of the overseas transfer, it might take a few days to be confirmed.</p>
+                    <button id="납부하기" onClick={() => {setLink4(true)}}>Rent Payment Form</button>
+                    </>
+                }
 
-                        data[i].결제확인용 == null
-                        ? setPayment(true)
-                        : null
+                {
+                    link4 === true
+                    ? <월세링크 />
+                    : null
+                }
 
-                    }
-
-                    {
-                        payment === true
-                        ? <결제버튼/>
-                        : null
-                    }
-                    
-                    <button id="납부하기" onClick={() => {setLink2(true)}}>보완서류 제출 / 点击补交材料<br/>Submission of supplementary documents</button>
-
-                    {
-                        link2 === true
-                        ? <Airt />
-                        : null
-                    }
-
-                    {
-                        link3 === true
-                        ? <결제링크 />
-                        : null
-                    }
+{
+                    link3 === true
+                    ? <연장폼 />
+                    : null
+                }   
                 </>
             )
         }
